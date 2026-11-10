@@ -9,9 +9,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuizApp">
 
-        <!-- Màn hình chính điều hướng (Tất cả thành viên) -->
+        <!-- Màn hình Đăng nhập / Đăng ký (SCR-01) — launcher -->
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,43 +19,49 @@
             </intent-filter>
         </activity>
 
-        <!-- Module 2: Quản lý ngân hàng câu hỏi (Lê Đức Mạnh) -->
+        <!-- Màn hình chính với Bottom Navigation (3 Fragment: Đề thi / Lịch sử / Câu hỏi) -->
         <activity
-            android:name=".ui.question.QuestionListActivity"
+            android:name=".ui.MainActivity"
+            android:exported="false" />
+
+        <!-- Module 3: Chi tiết đề (SCR-03) -->
+        <activity
+            android:name=".ui.exam.ExamDetailActivity"
             android:exported="false"
-            android:label="@string/title_question_bank"
             android:parentActivityName=".ui.MainActivity" />
 
-        <activity
-            android:name=".ui.question.QuestionEditActivity"
-            android:exported="false"
-            android:label="@string/title_question_edit"
-            android:parentActivityName=".ui.question.QuestionListActivity"
-            android:windowSoftInputMode="adjustResize" />
-
-        <!-- Module 3: Trải nghiệm làm bài thi (Đinh Đức Nghĩa) -->
-        <activity
-            android:name=".ui.exam.ExamSetupActivity"
-            android:exported="false"
-            android:label="@string/title_exam_setup"
-            android:parentActivityName=".ui.MainActivity" />
-
+        <!-- Module 3: Làm bài thi (SCR-04) -->
         <activity
             android:name=".ui.exam.ExamActivity"
             android:exported="false"
             android:label="@string/title_exam_in_progress" />
 
+        <!-- Module 3: Kết quả (SCR-05) -->
         <activity
             android:name=".ui.exam.ResultActivity"
             android:exported="false"
             android:label="@string/title_exam_result" />
 
-        <!-- Module 1: Lịch sử & Thống kê làm bài (Lê Đăng Hiệp) -->
+        <!-- Module 2: Thêm / Sửa câu hỏi (SCR-08) -->
+        <activity
+            android:name=".ui.question.QuestionEditActivity"
+            android:exported="false"
+            android:label="@string/title_question_edit"
+            android:parentActivityName=".ui.MainActivity"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Giữ lại để tránh build error nếu còn ref — sẽ không dùng -->
+        <activity
+            android:name=".ui.exam.ExamSetupActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.question.QuestionListActivity"
+            android:exported="false" />
+
         <activity
             android:name=".ui.history.HistoryActivity"
-            android:exported="false"
-            android:label="@string/title_exam_history"
-            android:parentActivityName=".ui.MainActivity" />
+            android:exported="false" />
 
     </application>
 

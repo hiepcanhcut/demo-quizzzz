@@ -3,30 +3,53 @@
     <color name="primary">#C62828</color> <!-- Đỏ PTIT -->
     <color name="primary_dark">#8E0000</color>
     <color name="primary_light">#FF5F52</color>
+    <color name="primary_soft">#FFEBEE</color> <!-- Đỏ nền nhạt -->
     <color name="accent">#1976D2</color>
 
     <!-- UI Backgrounds & Surface -->
-    <color name="background">#F5F5F5</color>
+    <color name="background">#F6F7F9</color>
     <color name="surface">#FFFFFF</color>
-    <color name="surface_variant">#EEEEEE</color>
+    <color name="surface_variant">#F0F2F5</color>
+    <color name="border_color">#E0E0E0</color>
 
     <!-- Text colors -->
     <color name="text_primary">#212121</color>
     <color name="text_secondary">#757575</color>
+    <color name="text_hint">#9E9E9E</color>
     <color name="text_on_primary">#FFFFFF</color>
+
+    <!-- Tags & Subject colors -->
+    <color name="tag_csdl_bg">#E3F2FD</color>
+    <color name="tag_csdl_text">#1976D2</color>
+    <color name="tag_mang_bg">#E0F2F1</color>
+    <color name="tag_mang_text">#00796B</color>
+    <color name="tag_hdh_bg">#FCE4EC</color>
+    <color name="tag_hdh_text">#C2185B</color>
+
+    <!-- Sync status colors -->
+    <color name="sync_pending_bg">#FFF3E0</color>
+    <color name="sync_pending_text">#E65100</color>
+    <color name="sync_synced_bg">#E8F5E9</color>
+    <color name="sync_synced_text">#2E7D32</color>
+    <color name="sync_error_bg">#FFEBEE</color>
+    <color name="sync_error_text">#C62828</color>
 
     <!-- Quiz state colors -->
     <color name="answer_default_bg">#FFFFFF</color>
-    <color name="answer_default_stroke">#BDBDBD</color>
-    <color name="answer_selected_bg">#E3F2FD</color>
-    <color name="answer_selected_stroke">#1976D2</color>
+    <color name="answer_default_stroke">#E0E0E0</color>
+    <color name="answer_selected_bg">#FFEBEE</color>
+    <color name="answer_selected_stroke">#C62828</color>
     <color name="answer_correct_bg">#E8F5E9</color>
     <color name="answer_correct_stroke">#4CAF50</color>
     <color name="answer_wrong_bg">#FFEBEE</color>
     <color name="answer_wrong_stroke">#E53935</color>
 
-    <!-- Status colors -->
+    <!-- Status & badges -->
     <color name="flag_color">#FF9800</color>
+    <color name="flag_bg">#FFF3E0</color>
+    <color name="timer_badge_bg">#FFEBEE</color>
     <color name="timer_warning">#D32F2F</color>
+    <color name="offline_banner_bg">#FFF9C4</color>
+    <color name="offline_banner_text">#F57F17</color>
+    <color name="skeleton_bg">#E0E0E0</color>
 </resources>
-

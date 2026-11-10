@@ -1,178 +1,283 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@color/background"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <!-- Red curved header SCR-08 -->
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:background="@drawable/header_curved_red"
+        android:paddingStart="16dp"
+        android:paddingTop="36dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="20dp">
 
-        <!-- Môn học -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilCategory"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:hint="@string/label_category">
+        <ImageButton
+            android:id="@+id/btnBackEdit"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Quay lại"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="#FFFFFF" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etCategory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Nội dung câu hỏi -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilContent"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:hint="@string/label_content">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etContent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="top"
-                android:lines="3" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- 4 Đáp án -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilOptionA"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:hint="@string/label_option_a">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etOptionA"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilOptionB"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:hint="@string/label_option_b">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etOptionB"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilOptionC"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:hint="@string/label_option_c">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etOptionC"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilOptionD"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:hint="@string/label_option_d">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etOptionD"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Chọn đáp án đúng (0, 1, 2, 3) -->
         <TextView
+            android:id="@+id/tvHeaderTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/label_correct_answer"
-            android:textColor="@color/text_primary"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@id/btnBackEdit"
+            android:text="Thêm câu hỏi"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
             android:textStyle="bold" />
+    </RelativeLayout>
 
-        <RadioGroup
-            android:id="@+id/rgCorrectAnswer"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="20dp">
 
-            <RadioButton
-                android:id="@+id/rbOptionA"
-                android:layout_width="0dp"
+            <!-- Môn học label + Spinner -->
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:checked="true"
-                android:text="A" />
+                android:text="Môn học"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
 
-            <RadioButton
-                android:id="@+id/rbOptionB"
-                android:layout_width="0dp"
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="1dp">
+
+                <Spinner
+                    android:id="@+id/spnSubject"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:paddingHorizontal="12dp" />
+            </androidx.cardview.widget.CardView>
+
+            <!-- Nội dung câu hỏi label + input -->
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="B" />
+                android:text="Nội dung câu hỏi"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
 
-            <RadioButton
-                android:id="@+id/rbOptionC"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="C" />
-
-            <RadioButton
-                android:id="@+id/rbOptionD"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="D" />
-        </RadioGroup>
-
-        <!-- Lời giải -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilExplanation"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:hint="@string/label_explanation">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etExplanation"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="top"
-                android:lines="2" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="18dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp">
 
-        <!-- Nút Lưu -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSave"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:text="@string/btn_save"
-            app:cornerRadius="12dp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:hint="Nhập nội dung câu hỏi..."
+                    android:lines="3" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
+            <!-- Các đáp án (chọn đáp án đúng) -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Các đáp án (chọn đáp án đúng)"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
 
-</ScrollView>
+            <!-- Option A Card -->
+            <LinearLayout
+                android:id="@+id/cardOptA"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/bg_option_selected"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp">
 
+                <RadioButton
+                    android:id="@+id/rbOptionA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="A."
+                    android:textColor="@color/primary"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etOptionA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="Đáp án A"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Option B Card -->
+            <LinearLayout
+                android:id="@+id/cardOptB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/bg_option_default"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp">
+
+                <RadioButton
+                    android:id="@+id/rbOptionB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="B."
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etOptionB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="Đáp án B"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Option C Card -->
+            <LinearLayout
+                android:id="@+id/cardOptC"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/bg_option_default"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp">
+
+                <RadioButton
+                    android:id="@+id/rbOptionC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="C."
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etOptionC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="Đáp án C"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Option D Card -->
+            <LinearLayout
+                android:id="@+id/cardOptD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_option_default"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp">
+
+                <RadioButton
+                    android:id="@+id/rbOptionD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="D."
+                    android:textColor="@color/text_primary"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etOptionD"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="Đáp án D"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Lời giải thích -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lời giải thích (không bắt buộc)"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="24dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etExplanation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:hint="Nhập giải thích cho đáp án..."
+                    android:lines="2" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Nút Lưu câu hỏi -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSave"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:backgroundTint="@color/primary"
+                android:text="Lưu câu hỏi"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:cornerRadius="12dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -4,17 +4,13 @@ import android.provider.BaseColumns;
 
 /**
  * Định nghĩa cấu trúc lược đồ CSDL SQLite (bảng, cột, câu lệnh tạo bảng).
- * 
- * PHÂN CÔNG:
- * - Module: Module 2 - Quản lý Ngân hàng câu hỏi & Đề thi
- * - Phụ trách: Lê Đức Mạnh
  */
 public final class DbContract {
 
     private DbContract() {}
 
     public static final String DATABASE_NAME = "quiz.db";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
 
     /** Bảng lưu trữ câu hỏi */
     public static class QuestionEntry implements BaseColumns {
@@ -57,22 +53,26 @@ public final class DbContract {
     /** Bảng lưu trữ lịch sử các lần thi */
     public static class HistoryEntry implements BaseColumns {
         public static final String TABLE_NAME = "exam_history";
+        public static final String COLUMN_EXAM_TITLE = "exam_title";
         public static final String COLUMN_CATEGORY = "category";
         public static final String COLUMN_TOTAL_QUESTIONS = "total_questions";
         public static final String COLUMN_CORRECT_COUNT = "correct_count";
         public static final String COLUMN_SCORE_PERCENT = "score_percent";
         public static final String COLUMN_DURATION_SECONDS = "duration_seconds";
         public static final String COLUMN_TAKEN_AT = "taken_at";
+        public static final String COLUMN_SYNC_STATUS = "sync_status";
 
         public static final String SQL_CREATE_TABLE =
                 "CREATE TABLE " + TABLE_NAME + " (" +
                         _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        COLUMN_EXAM_TITLE + " TEXT, " +
                         COLUMN_CATEGORY + " TEXT NOT NULL, " +
                         COLUMN_TOTAL_QUESTIONS + " INTEGER NOT NULL, " +
                         COLUMN_CORRECT_COUNT + " INTEGER NOT NULL, " +
                         COLUMN_SCORE_PERCENT + " REAL NOT NULL, " +
                         COLUMN_DURATION_SECONDS + " INTEGER NOT NULL, " +
-                        COLUMN_TAKEN_AT + " INTEGER NOT NULL" +
+                        COLUMN_TAKEN_AT + " INTEGER NOT NULL, " +
+                        COLUMN_SYNC_STATUS + " INTEGER DEFAULT 0" +
                         ");";
 
         public static final String SQL_CREATE_INDEX_TAKEN_AT =
@@ -82,4 +82,3 @@ public final class DbContract {
                 "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 }
-

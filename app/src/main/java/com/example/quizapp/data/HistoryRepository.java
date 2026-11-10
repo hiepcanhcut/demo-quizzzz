@@ -12,10 +12,6 @@ import java.util.List;
 
 /**
  * Repository phụ trách lưu và đọc lịch sử làm bài thi từ bảng exam_history trong SQLite.
- * 
- * PHÂN CÔNG:
- * - Module: Module 1 - Quản lý Người dùng & Thống kê học tập (User & Analytics)
- * - Phụ trách: Lê Đăng Hiệp
  */
 public class HistoryRepository {
 
@@ -31,12 +27,14 @@ public class HistoryRepository {
     public long insert(ExamHistory history) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(DbContract.HistoryEntry.COLUMN_EXAM_TITLE, history.getExamTitle());
         values.put(DbContract.HistoryEntry.COLUMN_CATEGORY, history.getCategory());
         values.put(DbContract.HistoryEntry.COLUMN_TOTAL_QUESTIONS, history.getTotalQuestions());
         values.put(DbContract.HistoryEntry.COLUMN_CORRECT_COUNT, history.getCorrectCount());
         values.put(DbContract.HistoryEntry.COLUMN_SCORE_PERCENT, history.getScorePercent());
         values.put(DbContract.HistoryEntry.COLUMN_DURATION_SECONDS, history.getDurationSeconds());
         values.put(DbContract.HistoryEntry.COLUMN_TAKEN_AT, history.getTakenAt());
+        values.put(DbContract.HistoryEntry.COLUMN_SYNC_STATUS, history.getSyncStatus());
 
         return db.insert(DbContract.HistoryEntry.TABLE_NAME, null, values);
     }
@@ -82,15 +80,26 @@ public class HistoryRepository {
     }
 
     private ExamHistory cursorToHistory(Cursor cursor) {
-        return new ExamHistory(
-                cursor.getLong(cursor.getColumnIndexOrThrow(DbContract.HistoryEntry._ID)),
-                cursor.getString(cursor.getColumnIndexOrThrow(DbContract.HistoryEntry.COLUMN_CATEGORY)),
-                cursor.getInt(cursor.getColumnIndexOrThrow(DbContract.HistoryEntry.COLUMN_TOTAL_QUESTIONS)),
-                cursor.getInt(cursor.getColumnIndexOrThrow(DbContract.HistoryEntry.COLUMN_CORRECT_COUNT)),
-                cursor.getDouble(cursor.getColumnIndexOrThrow(DbContract.HistoryEntry.COLUMN_SCORE_PERCENT)),
-                cursor.getInt(cursor.getColumnIndexOrThrow(DbContract.HistoryEntry.COLUMN_DURATION_SECONDS)),
-                cursor.getLong(cursor.getColumnIndexOrThrow(DbContract.HistoryEntry.COLUMN_TAKEN_AT))
-        );
+        long id = cursor.getLong(cursor.getColumnIndexOrThrow(DbContract.HistoryEntry._ID));
+        String category = cursor.getString(cursor.getColumnIndexOrThrow(DbContract.HistoryEntry.COLUMN_CATEGORY));
+        int totalQuestions = cursor.getInt(cursor.getColumnIndexOrThrow(DbContract.HistoryEntry.COLUMN_TOTAL_QUESTIONS));
+        int correctCount = cursor.getInt(cursor.getColumnIndexOrThrow(DbContract.HistoryEntry.COLUMN_CORRECT_COUNT));
+        double scorePercent = cursor.getDouble(cursor.getColumnIndexOrThrow(DbContract.HistoryEntry.COLUMN_SCORE_PERCENT));
+        int durationSeconds = cursor.getInt(cursor.getColumnIndexOrThrow(DbContract.HistoryEntry.COLUMN_DURATION_SECONDS));
+        long takenAt = cursor.getLong(cursor.getColumnIndexOrThrow(DbContract.HistoryEntry.COLUMN_TAKEN_AT));
+
+        String examTitle = "Đề thi – " + category;
+        int titleColIdx = cursor.getColumnIndex(DbContract.HistoryEntry.COLUMN_EXAM_TITLE);
+        if (titleColIdx != -1 && !cursor.isNull(titleColIdx)) {
+            examTitle = cursor.getString(titleColIdx);
+        }
+
+        int syncStatus = ExamHistory.SYNC_SUCCESS;
+        int syncColIdx = cursor.getColumnIndex(DbContract.HistoryEntry.COLUMN_SYNC_STATUS);
+        if (syncColIdx != -1 && !cursor.isNull(syncColIdx)) {
+            syncStatus = cursor.getInt(syncColIdx);
+        }
+
+        return new ExamHistory(id, examTitle, category, totalQuestions, correctCount, scorePercent, durationSeconds, takenAt, syncStatus);
     }
 }
-

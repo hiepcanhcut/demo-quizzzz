@@ -54,7 +54,9 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView() {
-        adapter = new HistoryAdapter();
+        adapter = new HistoryAdapter(history -> {
+            // Mở ResultActivity nếu click
+        });
         rvHistory.setLayoutManager(new LinearLayoutManager(this));
         rvHistory.setAdapter(adapter);
     }

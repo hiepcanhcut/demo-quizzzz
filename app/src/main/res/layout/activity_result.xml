@@ -4,98 +4,296 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:orientation="vertical">
 
-    <!-- Card tổng quan kết quả -->
-    <com.google.android.material.card.MaterialCardView
+    <!-- Header cong đỏ PTIT -->
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="4dp">
+        android:background="@drawable/header_curved_red"
+        android:paddingStart="16dp"
+        android:paddingTop="36dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="24dp">
+
+        <ImageButton
+            android:id="@+id/btnBackResult"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="#FFFFFF" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@id/btnBackResult"
+            android:text="Kết quả"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="16dp">
 
+            <!-- Thẻ Điểm số Vòng tròn nổi bật -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <!-- Vòng tròn điểm số -->
+                    <FrameLayout
+                        android:layout_width="120dp"
+                        android:layout_height="120dp">
+
+                        <ProgressBar
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:indeterminate="false"
+                            android:max="100"
+                            android:progress="85"
+                            android:progressDrawable="@drawable/bg_option_selected"
+                            android:visibility="gone" />
+
+                        <LinearLayout
+                            android:layout_width="110dp"
+                            android:layout_height="110dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/bg_option_selected"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvScoreNumber"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="8.5"
+                                android:textColor="@color/primary"
+                                android:textSize="32sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="/ 10"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </FrameLayout>
+
+                    <!-- Thống kê câu đúng & thời gian -->
+                    <TextView
+                        android:id="@+id/tvScoreSummary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="34/40 câu đúng · 28 phút 40 giây"
+                        android:textColor="@color/text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <!-- Badge Đồng bộ -->
+                    <LinearLayout
+                        android:id="@+id/layoutSyncBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="28dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_warning_banner"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="12dp">
+
+                        <TextView
+                            android:id="@+id/tvSyncIcon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="⏳"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tvSyncStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:text="Chờ đồng bộ"
+                            android:textColor="@color/offline_banner_text"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Mục Kết quả từng câu -->
             <TextView
-                android:id="@+id/tvScorePercent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="80%"
-                android:textColor="@color/primary"
-                android:textSize="36sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvScoreFraction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Đúng: 8 / 10 câu"
+                android:layout_marginTop="22dp"
+                android:text="Kết quả từng câu"
                 android:textColor="@color/text_primary"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/tvGrade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/bg_option_selected"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="4dp"
-                android:text="Xếp loại: Khá tốt"
-                android:textColor="@color/accent"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <!-- Lưới số thứ tự câu (1..N) với màu xanh/đỏ -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvQuestionResultGrid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:nestedScrollingEnabled="false" />
+
+            <!-- Thẻ chi tiết câu được chọn -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardSelectedQuestionDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="14dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!-- Vạch trạng thái bên trái (Xanh/Đỏ) -->
+                    <View
+                        android:id="@+id/viewDetailStatusStrip"
+                        android:layout_width="6dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/answer_wrong_stroke" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/tvDetailQuestionTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Câu 3 – Sai"
+                            android:textColor="@color/primary"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvDetailUserSelection"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Bạn chọn: A · Đáp án đúng: C"
+                            android:textColor="@color/text_primary"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tvDetailQuestionContent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:lineSpacingExtra="3dp"
+                            android:text="Câu hỏi: Trong mô hình quan hệ, khóa chính dùng để làm gì?"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp" />
+
+                        <!-- Khung lời giải thích -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/bg_option_default"
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Lời giải thích:"
+                                android:textColor="@color/text_primary"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tvDetailExplanation"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:lineSpacingExtra="3dp"
+                                android:text="Khóa chính (Primary Key) là một thuộc tính dùng để định danh duy nhất mỗi bản ghi trong bảng."
+                                android:textColor="@color/text_secondary"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Hàng nút Xem lại đáp án & Làm lại -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnReviewAllAnswers"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_button_primary"
+                    android:text="Xem lại đáp án"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null" />
+
+                <Button
+                    android:id="@+id/btnRetakeExam"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_button_outline"
+                    android:text="Làm lại"
+                    android:textAllCaps="false"
+                    android:textColor="@color/primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@null" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
         </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="@string/review_answers"
-        android:textColor="@color/text_primary"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <!-- Danh sách xem lại đáp án -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvResultDetails"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginBottom="12dp" />
-
-    <!-- Nút Làm lại hoặc Về Menu chính -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnRetry"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/btn_retry" />
-
-        <Space
-            android:layout_width="8dp"
-            android:layout_height="wrap_content" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnBackHome"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/btn_back_home" />
-    </LinearLayout>
-
+    </ScrollView>
 </LinearLayout>
-
