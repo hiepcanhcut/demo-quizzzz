@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_rounded_card"
+    android:backgroundTint="#FFFFFF"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- Header dialog -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Tạo đề thi ngẫu nhiên"
+            android:textColor="@color/primary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/btnCloseDialog"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Đóng"
+            android:src="@drawable/ic_close"
+            app:tint="@color/text_secondary" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="16dp"
+        android:text="Hệ thống sẽ lấy ngẫu nhiên các câu hỏi từ ngân hàng để tạo đề thi mới."
+        android:textColor="@color/text_secondary"
+        android:textSize="13sp" />
+
+    <!-- Chọn Môn học -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chọn môn thi"
+        android:textColor="@color/text_primary"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="1dp">
+
+        <Spinner
+            android:id="@+id/spnRandomSubject"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:paddingHorizontal="12dp" />
+    </androidx.cardview.widget.CardView>
+
+    <!-- Chọn số câu hỏi -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Số lượng câu hỏi"
+        android:textColor="@color/text_primary"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <RadioGroup
+        android:id="@+id/rgQuestionCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbCount10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="10 câu"
+            android:textSize="13sp" />
+
+        <RadioButton
+            android:id="@+id/rbCount20"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="20 câu"
+            android:textSize="13sp" />
+
+        <RadioButton
+            android:id="@+id/rbCount40"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="40 câu"
+            android:textSize="13sp" />
+    </RadioGroup>
+
+    <!-- Chọn thời gian làm bài -->
+    <TextView
+        android:id="@+id/tvDurationHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="⏱️ Thời gian làm bài: 20 phút (Tính năng xáo trộn câu &amp; đáp án)"
+        android:textColor="@color/text_secondary"
+        android:textSize="13sp" />
+
+    <!-- Nút Bắt đầu làm bài -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnStartRandomExam"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:backgroundTint="@color/primary"
+        android:text="🎲 Sinh đề &amp; Bắt đầu thi"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        app:cornerRadius="12dp" />
+
+</LinearLayout>
+

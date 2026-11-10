@@ -106,6 +106,15 @@ public class QuizDatabaseHelper extends SQLiteOpenHelper {
             } catch (Exception ignored) {
             }
         }
+        if (oldVersion < 3) {
+            // Nâng cấp phiên bản 3: Tự động xóa câu hỏi mẫu cũ và cập nhật bộ câu hỏi mới phong phú
+            try {
+                db.delete(DbContract.QuestionEntry.TABLE_NAME,
+                        DbContract.QuestionEntry.COLUMN_IS_SAMPLE + " = 1", null);
+                SampleDataProvider.seed(db);
+            } catch (Exception ignored) {
+            }
+        }
     }
 
     public void restoreSampleQuestions() {

@@ -48,6 +48,7 @@ public class ExamListFragment extends Fragment implements ExamAdapter.OnExamItem
     private TextView tvUserNameHeader;
     private View btnProfileAvatar;
     private View btnSearchExam;
+    private View btnRandomExam;
     private LinearLayout llOfflineBanner;
     private CardView cardResumeExam;
     private TextView tvResumeTitle, tvResumeProgress;
@@ -92,6 +93,7 @@ public class ExamListFragment extends Fragment implements ExamAdapter.OnExamItem
         tvUserNameHeader = view.findViewById(R.id.tvUserNameHeader);
         btnProfileAvatar = view.findViewById(R.id.btnProfileAvatar);
         btnSearchExam = view.findViewById(R.id.btnSearchExam);
+        btnRandomExam = view.findViewById(R.id.btnRandomExam);
         llOfflineBanner = view.findViewById(R.id.llOfflineBanner);
         cardResumeExam = view.findViewById(R.id.cardResumeExam);
         tvResumeTitle = view.findViewById(R.id.tvResumeTitle);
@@ -144,6 +146,11 @@ public class ExamListFragment extends Fragment implements ExamAdapter.OnExamItem
 
         // Nút tìm kiếm / chọn nhanh trạng thái
         btnSearchExam.setOnClickListener(v -> showDemoStateDialog());
+
+        // Nút tạo đề thi ngẫu nhiên từ ngân hàng câu hỏi
+        if (btnRandomExam != null) {
+            btnRandomExam.setOnClickListener(v -> showRandomExamDialog());
+        }
 
         // Tiếp tục làm bài
         btnResumeAction.setOnClickListener(v -> {
@@ -257,6 +264,83 @@ public class ExamListFragment extends Fragment implements ExamAdapter.OnExamItem
             }
         }
         adapter.setExamList(filtered);
+    }
+
+    private void showRandomExamDialog() {
+        android.app.Dialog dialog = new android.app.Dialog(requireContext());
+        dialog.requestWindowFeature(android.view.Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_random_exam_setup);
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
+            dialog.getWindow().setLayout(
+                    (int) (getResources().getDisplayMetrics().widthPixels * 0.9),
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        }
+
+        android.widget.Spinner spnSubject = dialog.findViewById(R.id.spnRandomSubject);
+        android.widget.RadioGroup rgCount = dialog.findViewById(R.id.rgQuestionCount);
+        TextView tvHint = dialog.findViewById(R.id.tvDurationHint);
+        Button btnStart = dialog.findViewById(R.id.btnStartRandomExam);
+        View btnClose = dialog.findViewById(R.id.btnCloseDialog);
+
+        String[] subjectOptions = new String[]{"Tất cả các môn", "Cơ sở dữ liệu", "Mạng máy tính", "Hệ điều hành"};
+        android.widget.ArrayAdapter<String> spinnerAdapter = new android.widget.ArrayAdapter<>(
+                requireContext(),
+                android.R.layout.simple_spinner_dropdown_item,
+                subjectOptions
+        );
+        spnSubject.setAdapter(spinnerAdapter);
+
+        rgCount.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.rbCount10) {
+                tvHint.setText("⏱️ Thời gian làm bài: 15 phút (Lấy ngẫu nhiên 10 câu)");
+            } else if (checkedId == R.id.rbCount20) {
+                tvHint.setText("⏱️ Thời gian làm bài: 25 phút (Lấy ngẫu nhiên 20 câu)");
+            } else {
+                tvHint.setText("⏱️ Thời gian làm bài: 45 phút (Lấy ngẫu nhiên 40 câu)");
+            }
+        });
+
+        btnClose.setOnClickListener(v -> dialog.dismiss());
+
+        btnStart.setOnClickListener(v -> {
+            int selectedPosition = spnSubject.getSelectedItemPosition();
+            String chosenCategory = selectedPosition == 0 ? null : subjectOptions[selectedPosition];
+
+            int count = 20;
+            int checkedId = rgCount.getCheckedRadioButtonId();
+            if (checkedId == R.id.rbCount10) count = 10;
+            else if (checkedId == R.id.rbCount40) count = 40;
+
+            dialog.dismiss();
+            startRandomExam(chosenCategory, count);
+        });
+
+        dialog.show();
+    }
+
+    private void startRandomExam(String category, int count) {
+        long[] ids = questionRepository.pickRandomIds(category, count);
+        if (ids.length == 0) {
+            ids = questionRepository.pickRandomIds(null, count);
+        }
+
+        if (ids.length == 0) {
+            Toast.makeText(requireContext(), "Ngân hàng chưa có câu hỏi nào!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String title = (category == null || category.isEmpty())
+                ? "Đề ngẫu nhiên tổng hợp (" + ids.length + " câu)"
+                : "Đề ngẫu nhiên – " + category + " (" + ids.length + " câu)";
+
+        Intent intent = new Intent(requireContext(), ExamActivity.class);
+        intent.putExtra(Constants.EXTRA_QUESTION_IDS, ids);
+        intent.putExtra(Constants.EXTRA_CATEGORY, category != null ? category : "Tổng hợp");
+        intent.putExtra("exam_title", title);
+        startActivity(intent);
     }
 
     private void showDemoStateDialog() {

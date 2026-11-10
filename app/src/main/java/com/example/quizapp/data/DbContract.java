@@ -10,7 +10,7 @@ public final class DbContract {
     private DbContract() {}
 
     public static final String DATABASE_NAME = "quiz.db";
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
 
     /** Bảng lưu trữ câu hỏi */
     public static class QuestionEntry implements BaseColumns {

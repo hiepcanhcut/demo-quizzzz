@@ -36,6 +36,7 @@ import java.util.List;
 public class QuestionListFragment extends Fragment implements QuestionAdapter.OnQuestionActionListener {
 
     private TextView chipQAll, chipQCsdl, chipQMang, chipQHdh;
+    private View btnSearchQuestion;
     private RecyclerView rvQuestions;
     private View llQuestionEmpty;
     private FloatingActionButton fabAddQuestion;
@@ -75,6 +76,7 @@ public class QuestionListFragment extends Fragment implements QuestionAdapter.On
         chipQCsdl = view.findViewById(R.id.chipQCsdl);
         chipQMang = view.findViewById(R.id.chipQMang);
         chipQHdh = view.findViewById(R.id.chipQHdh);
+        btnSearchQuestion = view.findViewById(R.id.btnSearchQuestion);
 
         rvQuestions = view.findViewById(R.id.rvQuestions);
         llQuestionEmpty = view.findViewById(R.id.llQuestionEmpty);
@@ -95,6 +97,10 @@ public class QuestionListFragment extends Fragment implements QuestionAdapter.On
             Intent intent = new Intent(requireContext(), QuestionEditActivity.class);
             startActivity(intent);
         });
+
+        if (btnSearchQuestion != null) {
+            btnSearchQuestion.setOnClickListener(v -> showRestoreDialog());
+        }
     }
 
     private void selectFilter(String category, TextView selectedChip) {
@@ -187,6 +193,23 @@ public class QuestionListFragment extends Fragment implements QuestionAdapter.On
         });
 
         dialog.show();
+    }
+
+    private void showRestoreDialog() {
+        new androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                .setTitle("Khôi phục bộ câu hỏi mẫu")
+                .setMessage("Bạn có muốn nạp lại bộ hơn 60 câu hỏi mẫu PTIT (CSDL, Mạng, HĐH) vào ngân hàng không?")
+                .setPositiveButton("Khôi phục", (d, w) -> {
+                    AppExecutors.getInstance().diskIO().execute(() -> {
+                        repository.restoreSamples();
+                        AppExecutors.getInstance().mainThread().execute(() -> {
+                            Toast.makeText(requireContext(), "Đã nạp 60 câu hỏi mẫu thành công!", Toast.LENGTH_SHORT).show();
+                            loadQuestions();
+                        });
+                    });
+                })
+                .setNegativeButton("Hủy", null)
+                .show();
     }
 }
 
